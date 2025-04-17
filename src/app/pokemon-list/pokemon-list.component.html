@@ -1,0 +1,192 @@
+<div class="page-container">
+  <nav class="navbar bg-dark">
+    <div class="container">
+      <span class="navbar-brand">
+        <img
+          src="assets/images/pokemonLogo.svg"
+          alt="Poke"
+          width="150"
+          height="55.2"
+        />
+      </span>
+
+      <div class="d-flex">
+        <div class="search-container" style="position: relative">
+          <div class="input-group input-search-group">
+            <input
+              type="search"
+              class="form-control input-search"
+              [(ngModel)]="searchText"
+              (keyup.enter)="onSearchChange()"
+              placeholder="Search Pokémon or Type"
+              aria-label="Search Pokémon or Type"
+              aria-describedby="basic-addon1"
+              (focus)="onInputFocus()"
+              (blur)="onInputBlur()"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+              (click)="onSearchChange()"
+            >
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+          @if (isInputFocused() && recentSearches.length > 0) {
+          <div class="list-group recent-searches-dropdown">
+            @for (query of recentSearches; track $index) {
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              (click)="runSearch(query)"
+            >
+              {{ query }}
+            </button>
+            }
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              (click)="clearSearchHistory()"
+            >
+              Clear History
+            </button>
+          </div>
+          }
+        </div>
+
+        <select
+          class="form-select"
+          (change)="onTypeFilterChange($event)"
+          [disabled]="isTypesLoading() || types().length === 0"
+        >
+          <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+          <option selected value="all">All types</option>
+          @for (type of types(); track $index) {
+          <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  @if(isPokemonsLoading()) {
+  <div class="loading-container">
+    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  } @else if (error()) {
+  <div class="container error-message">
+    <i class="bi bi-exclamation-circle"></i>
+    <p class="error-text">
+      Oops! We had trouble retrieving your data. Try again in a moment.
+    </p>
+  </div>
+  } @else if (noResultsAfterFilter()){
+  <div class="container not-found-message">
+    <i class="bi bi-emoji-tear"></i>
+    <p class="not-found-text">
+      Hmm... nothing matches your filter. Try adjusting it?
+    </p>
+  </div>
+  } @else {
+  <div class="row">
+    @for (pokemon of pokemonsPaginated(); track $index) {
+    <div class="col-3 mb-4">
+      <div class="card">
+        <img
+          src="{{ pokemon.image }}"
+          class="card-img-top pokemon-image"
+          alt="{{ pokemon.name }} Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ pokemon.name }}</h5>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="getPokemonData(pokemon)"
+          >
+            Show stats
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if(shouldDisplayPagination()){
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage() === 1">
+        <span class="page-link" (click)="goToPage(currentPage() - 1)"
+          >Previous</span
+        >
+      </li>
+      <li class="page-item">
+        <span
+          class="page-link"
+          [class.active]="currentPage() === 1"
+          (click)="goToPage(1)"
+          >1</span
+        >
+      </li>
+      <li
+        class="page-item active"
+        [class.active]="currentPage() === 2"
+        aria-current="page"
+      >
+        <span class="page-link" (click)="goToPage(2)">2</span>
+      </li>
+      <li class="page-item">
+        <span
+          class="page-link"
+          [class.active]="currentPage() === 3"
+          (click)="goToPage(3)"
+          >3</span
+        >
+      </li>
+      <li class="page-item">
+        <span
+          class="page-link"
+          [class.active]="currentPage() > 3 && currentPage() < totalPages()"
+          (click)="
+            goToPage(
+              currentPage() === totalPages()
+                ? currentPage() - 1
+                : currentPage() + 1
+            )
+          "
+          >{{
+            currentPage() > 3 && currentPage() < totalPages()
+              ? currentPage()
+              : "..."
+          }}</span
+        >
+      </li>
+      <li class="page-item">
+        <span
+          class="page-link"
+          [class.active]="currentPage() === totalPages()"
+          (click)="goToPage(totalPages())"
+          >{{ totalPages() }}</span
+        >
+      </li>
+      <li class="page-item">
+        <span
+          class="page-link"
+          [class.active]="currentPage() > 3"
+          [class.disabled]="currentPage() === totalPages()"
+          (click)="nextPage()"
+          >Next</span
+        >
+      </li>
+    </ul>
+  </nav>
+  } }
+
+  <app-pokemon-stats-modal
+    [pokemonData]="pokemonData()"
+  ></app-pokemon-stats-modal>
+</div>

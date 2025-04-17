@@ -1,0 +1,31 @@
+@import "../../styles/pokemon-colors.scss";
+
+.pokemon-image {
+  width: 20rem;
+  height: 20rem;
+}
+
+.close-button {
+  margin-left: -2rem;
+}
+
+.stat-row {
+  .stat-name {
+    font-weight: bold;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  .stat-value {
+    // min-width: 30px;
+    text-align: right;
+  }
+
+  .divider {
+    margin: 0 8px;
+  }
+
+  // .progress {
+  //   height: 20px;
+  // }
+}
