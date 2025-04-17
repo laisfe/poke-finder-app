@@ -57,10 +57,10 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Running Unit Tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests with [Jest](https://jestjs.io), use the following command:
 
 ```bash
-ng test
+npm test
 ```
 
 Unit tests are included for key components and services, such as:
@@ -68,7 +68,7 @@ Unit tests are included for key components and services, such as:
 - **SearchComponent**: Tests for filtering Pokémon and managing recent searches.
 - **PokemonListStore**: Tests for loading Pokémon and handling errors.
 
----
+Jest provides a fast and reliable testing environment with features like snapshot testing, mocking, and detailed test reports.
 
 ## Running End-to-End Tests
 
