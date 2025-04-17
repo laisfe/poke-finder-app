@@ -1,6 +1,6 @@
 # PokeFinderApp
 
-PokeFinderApp is a Pokémon search and management application built with Angular. It allows users to search for Pokémon, view their stats, and filter them by type. The app is designed to be fast, responsive, and user-friendly.
+PokeFinderApp is a Pokémon search and management application built with Angular. It allows users to search for Pokémon, view their stats, and filter them by type. The app is designed to be fast and user-friendly.
 
 ---
 
