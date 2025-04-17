@@ -1,0 +1,44 @@
+<div class="search-container" style="position: relative">
+  <div class="input-group input-search-group">
+    <input
+      type="search"
+      class="form-control input-search"
+      [ngModel]="searchText()"
+      (ngModelChange)="searchTextChange.emit($event)"
+      (keyup.enter)="onSearchChange()"
+      placeholder="Search Pokémon or Type"
+      aria-label="Search Pokémon or Type"
+      aria-describedby="basic-addon1"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+    />
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      id="button-addon2"
+      (click)="onSearchChange()"
+    >
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+  @if (isInputFocused() && recentSearches().length > 0) {
+  <div class="list-group recent-searches-dropdown">
+    @for (query of recentSearches(); track $index) {
+    <button
+      type="button"
+      class="list-group-item list-group-item-action"
+      (click)="runSearch(query)"
+    >
+      {{ query }}
+    </button>
+    }
+    <button
+      type="button"
+      class="list-group-item list-group-item-action"
+      (click)="clearSearchHistory()"
+    >
+      Clear History
+    </button>
+  </div>
+  }
+</div>

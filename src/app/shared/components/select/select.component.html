@@ -1,0 +1,11 @@
+<select
+  class="form-select"
+  (change)="onTypeFilterChange($event)"
+  [disabled]="isTypesLoading() || types().length === 0"
+>
+  <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+  <option selected value="all">All types</option>
+  @for (type of types(); track $index) {
+  <option [value]="type">{{ type }}</option>
+  }
+</select>

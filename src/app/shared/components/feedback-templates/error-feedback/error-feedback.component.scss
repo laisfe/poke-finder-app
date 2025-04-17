@@ -1,0 +1,20 @@
+.error-message {
+  margin: 0 auto;
+  width: 30rem;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  i {
+    color: rgb(145, 58, 58);
+    font-size: 3.7rem;
+  }
+
+  .error-text {
+    font-size: 1.4rem;
+    max-width: 20rem;
+    justify-self: center;
+  }
+}

@@ -1,27 +1,50 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center w-100" id="exampleModalLabel">
           {{ pokemonData()?.name }}
         </h5>
-        <button type="button" class="btn-close close-button" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close close-button"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center mb-3">
-          <img src="{{pokemonData()?.image}}" class="card-img-top pokemon-image" alt="{{pokemonData()?.name}} Image">
+          <img
+            src="{{ pokemonData()?.image }}"
+            class="card-img-top pokemon-image"
+            alt="{{ pokemonData()?.name }} Image"
+          />
         </div>
 
         @for (stat of pokemonData()?.stats; track $index) {
         <div class="stat-row d-flex align-items-center mb-2">
-          <span class="stat-name me-2">{{stat.displayName}} </span>
+          <span class="stat-name me-2">{{ stat.displayName }} </span>
           <span class="divider">|</span>
           <span class="stat-value me-2 mr-2">{{ stat.baseStat }}</span>
-          <div class="progress flex-grow-1" role="progressbar" aria-label="Animated striped example"
-            [attr.aria-valuenow]="stat.baseStat" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar progress-bar-striped progress-bar-animated"
-              [ngStyle]="{ width: stat.baseStat + '%' }" [ngClass]="'stat-' + stat.name">
-            </div>
+          <div
+            class="progress flex-grow-1"
+            role="progressbar"
+            aria-label="Animated striped example"
+            [attr.aria-valuenow]="stat.baseStat"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              [ngStyle]="{ width: stat.baseStat + '%' }"
+              [ngClass]="'stat-' + stat.name"
+            ></div>
           </div>
         </div>
         }

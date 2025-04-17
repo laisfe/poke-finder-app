@@ -1,17 +1,5 @@
-.navbar {
-  margin-bottom: 2rem;
-
-  .form-select {
-    width: auto;
-  }
-}
-
-.input-search-group {
-  padding-right: 10px;
-
-  .input-search {
-    width: 14rem;
-  }
+.clickable-card {
+  cursor: pointer;
 }
 
 .row {
@@ -19,84 +7,31 @@
 }
 
 .page-container {
-  position: relative; /* Make this the positioned ancestor */
-  min-height: 100vh; /* Ensure it takes up the full viewport height */
+  position: relative;
+  min-height: 100vh;
 }
 
-.loading-container {
-  position: absolute; /* Position relative to .page-container */
-  top: 60%; /* Center vertically within the page-container */
-  left: 50%; /* Center horizontally */
-}
 .card {
   width: 12rem;
   margin: 0 auto;
+  min-height: 16rem;
+
+  .no-image {
+    font-size: 8rem;
+    text-align: center;
+  }
 
   .pokemon-image {
     width: 10rem;
     height: 10rem;
     align-self: center;
   }
-  .card-body {
-    justify-items: center;
+  .center-text {
+    text-align: center;
 
     .card-title {
-      width: fit-content;
+      font-size: 1.2rem;
+      font-weight: 500;
     }
-  }
-}
-
-.error-message {
-  margin: 0 auto;
-  width: 30rem;
-  position: absolute;
-  top: 40%;
-  left: 0;
-  right: 0;
-  text-align: center;
-
-  i {
-    color: rgb(145, 58, 58);
-    font-size: 3.7rem;
-  }
-
-  .error-text {
-    font-size: 1.4rem;
-    max-width: 20rem;
-    justify-self: center;
-  }
-}
-
-.recent-searches-dropdown {
-  position: absolute;
-  top: 100%; /* Position below the input field */
-  left: 0;
-  width: 100%; /* Match the width of the input field */
-  z-index: 1000; /* Ensure it appears above other elements */
-  background-color: white; /* Dropdown background */
-  border: 1px solid #ccc; /* Optional: Add a border */
-  border-radius: 0.25rem; /* Optional: Rounded corners */
-  max-height: 200px; /* Limit the height */
-  overflow-y: auto; /* Enable scrolling if content exceeds max height */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
-}
-
-.not-found-message {
-  margin: 0 auto;
-  width: 30rem;
-  position: absolute;
-  top: 40%;
-  left: 0;
-  right: 0;
-  text-align: center;
-
-  i {
-    color: rgb(204, 118, 69);
-    font-size: 3.7rem;
-  }
-  .not-found-text {
-    font-size: 1.4rem;
-    max-width: 20rem;
-    justify-self: center;
   }
 }

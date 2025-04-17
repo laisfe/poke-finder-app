@@ -1,36 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { switchMap, tap, catchError, map, finalize } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { PokemonService } from '../services/pokemon.service';
 import { getStatDisplayName } from '../shared/utilities/pokemon.util';
-import { Pokemon } from '../types/pokemon.types';
-import { capitalizeFirstLetter } from '../shared/utilities/string.util';
-
-// export interface Pokemon {
-//   name: string;
-//   url: string;
-// }
-
-export interface PokemonListState {
-  pokemons: Pokemon[];
-  types: string[];
-  pokemonsLoading: boolean;
-  typesLoading: boolean;
-  error: string | null;
-}
+import {
+  Pokemon,
+  PokemonListState,
+  PokemonStatResult,
+  PokemonTypesResult,
+} from '../types/pokemon.types';
+import { capitalizeWords } from '../shared/utilities/string.util';
 
 @Injectable()
 export class PokemonListStore extends ComponentStore<PokemonListState> {
-  // SELECTORS
   readonly pokemons$ = this.select((state) => state.pokemons);
   readonly types$ = this.select((state) => state.types);
   readonly isPokemonsLoading$ = this.select((state) => state.pokemonsLoading);
   readonly isTypesLoading$ = this.select((state) => state.typesLoading);
   readonly error$ = this.select((state) => state.error);
 
-  // UPDATERS
   public readonly setPokemonsLoading = this.updater(
     (state, pokemonsLoading: boolean) => ({
       ...state,
@@ -63,30 +52,28 @@ export class PokemonListStore extends ComponentStore<PokemonListState> {
     loading: false,
   }));
 
-  // EFFECT: Load Pokémon list
   public readonly loadPokemons = this.effect((trigger$: Observable<void>) =>
     trigger$.pipe(
       tap(() => this.setPokemonsLoading(true)),
       switchMap(() =>
         this.pokemonService.getAllPokemon().pipe(
           map((pokemonList) => {
-            const pokemonslist = pokemonList.map((pokemon: any) => ({
+            const pokemonslist = pokemonList.map((pokemon) => ({
               id: pokemon.id,
-              name: capitalizeFirstLetter(pokemon.name),
+              name: capitalizeWords(pokemon.name),
               image: pokemon.sprites.other['official-artwork'].front_default,
-              stats: pokemon.stats.map((stat: any) => ({
+              stats: pokemon.stats.map((stat: PokemonStatResult) => ({
                 name: stat.stat.name,
                 displayName: getStatDisplayName(stat.stat.name),
                 effort: stat.effort,
                 baseStat: stat.base_stat.toString().padStart(3, '0'),
               })),
-              types: pokemon.types.map((type: any) =>
-                capitalizeFirstLetter(type.type.name)
+              types: pokemon.types.map((type: PokemonTypesResult) =>
+                capitalizeWords(type.type.name)
               ),
               height: pokemon.height,
               weight: pokemon.weight,
-            })) as any;
-            console.log('Pokémon list:', pokemonslist);
+            })) as Pokemon[];
             this.setPokemons(pokemonslist);
             return EMPTY;
           }),
@@ -107,9 +94,7 @@ export class PokemonListStore extends ComponentStore<PokemonListState> {
       switchMap(() =>
         this.pokemonService.getTypes().pipe(
           map(({ results }) => {
-            const typesList = results.map((type: any) =>
-              capitalizeFirstLetter(type.name)
-            ) as any;
+            const typesList = results.map((type) => capitalizeWords(type.name));
             this.setTypes(typesList);
             return EMPTY;
           }),
