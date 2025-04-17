@@ -115,7 +115,7 @@ export class PokemonListComponent implements OnInit {
 
   public getPokemonData(pokemon: Pokemon) {
     this.pokemonData.set(pokemon);
-    this.pokemonStatsModalService.openModal('exampleModal');
+    this.pokemonStatsModalService.openModal('statsModal');
   }
 
   private getPaginatedFilteredPokemons(page: number, pageSize: number) {
