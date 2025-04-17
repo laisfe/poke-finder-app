@@ -6,11 +6,16 @@
   }
 }
 
+.trash-icon {
+  color: #ff0000;
+  font-size: 1rem;
+}
+
 .recent-searches-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: 14rem;
   z-index: 1000;
   background-color: white;
   border: 1px solid #ccc;
