@@ -22,6 +22,8 @@ const config = {
   collectCoverage: true,
   coverageReporters: ['html'],
   coverageDirectory: '<rootDir>/coverage/',
+  verbose: true, // Ensure verbose logging is enabled
+  silent: false, // Disable silent mode
 };
 
 module.exports = config;
